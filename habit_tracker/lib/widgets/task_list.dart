@@ -21,13 +21,23 @@ class _TaskListState extends State<TaskList> {
         itemBuilder: (context, index) {
           final task = taskData.tasks[index];
           return Dismissible(
-            key: Key(taskData.tasks[index].toString()),
+            key: UniqueKey(),
             onDismissed: (direction) {
               setState(() {
                 taskData.tasks.removeAt(index);
               });
             },
-            background: Container(color: Colors.red),
+            background: Container(
+              color: Colors.red,
+              alignment: Alignment.centerRight,
+              child: Padding(
+                padding: const EdgeInsets.only(right: 30.0),
+                child: Icon(
+                  Icons.delete,
+                  color: Colors.white,
+                ),
+              ),
+            ),
             child: Container(
                 height: 60.0,
                 margin: EdgeInsets.only(bottom: 15.0),

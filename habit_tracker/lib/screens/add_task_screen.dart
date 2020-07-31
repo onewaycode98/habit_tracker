@@ -1,11 +1,20 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:habit_tracker/colors.dart';
 import 'package:habit_tracker/style.dart';
 import 'package:provider/provider.dart';
 import 'package:habit_tracker/models/task_data.dart';
 
-class AddTaskScreen extends StatelessWidget {
-  String newTaskTitle;
+class AddTaskScreen extends StatefulWidget {
+  @override
+  _AddTaskScreenState createState() => _AddTaskScreenState();
+}
+
+class _AddTaskScreenState extends State<AddTaskScreen> {
+  TextEditingController _newTaskTitle = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,26 +29,35 @@ class AddTaskScreen extends StatelessWidget {
               style: kHeaderTextStyle,
             ),
             SizedBox(height: 30.0),
-            TextField(
-              cursorColor: kFirstGreenColor,
-              decoration: InputDecoration(
-                  enabledBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: Colors.black87),
-                  ),
-                  focusedBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(color: Colors.black87)),
-                  labelText: 'Name',
-                  labelStyle: TextStyle(color: Colors.black87)),
-              onChanged: (newText) {
-                newTaskTitle = newText;
-              },
+            Form(
+              key: _formKey,
+              child: TextFormField(
+                validator: (value) {
+                  if (value.isEmpty) {
+                    return 'Please enter name task';
+                  }
+                  return null;
+                },
+                controller: _newTaskTitle,
+                cursorColor: kFirstGreenColor,
+                decoration: InputDecoration(
+                    enabledBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.black87),
+                    ),
+                    focusedBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(color: Colors.black87)),
+                    labelText: 'Name',
+                    labelStyle: TextStyle(color: Colors.black87)),
+              ),
             ),
             SizedBox(height: 30.0),
             InkWell(
               onTap: () {
-                Provider.of<TasksData>(context, listen: false)
-                    .addTask(newTaskTitle);
-                Navigator.pop(context);
+                if (_formKey.currentState.validate()) {
+                  Provider.of<TasksData>(context, listen: false)
+                      .addTask(_newTaskTitle.text);
+                  Navigator.pop(context);
+                }
               },
               child: Container(
                 width: double.infinity,

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/material.dart';
-import 'package:habit_tracker/colors.dart';
 import 'package:habit_tracker/models/task_data.dart';
 import 'package:provider/provider.dart';
 import 'screens/task_screen.dart';

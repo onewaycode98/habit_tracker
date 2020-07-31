@@ -32,7 +32,7 @@ class _TaskTileState extends State<TaskTile> {
       activeColor: kFirstGreenColor,
       controlAffinity: ListTileControlAffinity.leading,
       title: Text(
-        widget.name,
+        widget.name.toString(),
         style: TextStyle(color: textColor, decoration: textDecoration),
       ),
       onChanged: (bool value) {
