@@ -24,6 +24,12 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
+            GestureDetector(
+                onTap: () {
+                  Navigator.pop(context);
+                },
+                child: Icon(Icons.arrow_back_ios)),
+            SizedBox(height: 20.0),
             Text(
               'Create new task',
               style: kHeaderTextStyle,
@@ -52,6 +58,8 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
             ),
             SizedBox(height: 30.0),
             InkWell(
+              highlightColor: Colors.transparent,
+              splashColor: Colors.white,
               onTap: () {
                 if (_formKey.currentState.validate()) {
                   Provider.of<TasksData>(context, listen: false)
